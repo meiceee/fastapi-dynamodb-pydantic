@@ -1,0 +1,111 @@
+openapi: "3.0.0"
+info:
+  title: 【TechBlog】社内ランチ共有アプリ API
+  version: 1.0.0
+paths:
+  /posts:
+    get:
+      summary: すべてのランチ投稿を取得
+      responses:
+        '200':
+          description: 成功。すべてのランチ投稿を返す。
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+              example:
+                - post_id: "1"
+                  user_id: "user123"
+                  content: "今日ここ行ってきました！とても良かった！"
+                  image_url: "https://example.com/lunch.jpg"
+                  location: "AAA店"
+                - post_id: "2"
+                  user_id: "user456"
+                  content: "チーム〇〇でラーメンを食べてきました！"
+                  image_url: "https://example.com/ramen.jpg"
+                  location: "BBB店"
+    post:
+      summary: 新しいランチ投稿を作成
+      requestBody:
+        description: 作成するランチ投稿の情報
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+            example:
+              user_id: "user789"
+              content: "〇〇さんとランチしました。デザートがとても美味しかった！"
+              image_url: "https://example.com/dessert.jpg"
+              location: "CCC店"
+      responses:
+        '201':
+          description: 投稿成功。作成したランチ投稿の情報を返す.
+          content:
+            application/json:
+              example:
+                post_id: "3"
+                user_id: "user789"
+                content: "〇〇さんとランチしました。デザートがとても美味しかった！"
+                image_url: "https://example.com/dessert.jpg"
+                location: "CCC店"
+
+  /posts/{post_id}/likes:
+    post:
+      summary: 特定のランチ投稿にいいねを押す
+      parameters:
+        - $ref: '#/components/parameters/post_id'
+      responses:
+        '200':
+          description: いいね成功。いいねを押したランチ投稿の情報を返す.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+              example:
+                post_id: "3"
+                user_id: "user789"
+                content: "〇〇さんとランチしました。デザートがとても美味しかった！"
+                image_url: "https://example.com/dessert.jpg"
+                location: "CCC店"
+                likes:
+                  - "user123"
+                  - "user456"
+                  - "user789"
+components:
+  parameters:
+    post_id:
+      name: post_id
+      in: path
+      description: ランチ投稿ID
+      required: true
+      schema:
+        type: string
+  schemas:
+    Post:
+      type: object
+      properties:
+        post_id:
+          type: string
+          description: ランチ投稿ID
+        user_id:
+          type: string
+          description: ランチ投稿者のユーザーID
+        content:
+          type: string
+          description: ランチ投稿の内容
+        image_url:
+          type: string
+          description: ランチ投稿の画像URL
+        location:
+          type: string
+          description: ランチ投稿の場所
+        likes:
+          type: array
+          description: いいねを押したユーザーのIDの配列
+          items:
+            type: string
+
+
