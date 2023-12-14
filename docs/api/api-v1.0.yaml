@@ -21,11 +21,31 @@ paths:
                   content: "今日ここ行ってきました！とても良かった！"
                   image_url: "https://example.com/lunch.jpg"
                   location: "AAA店"
+                  likes:
+                    - "user456"
+                    - "user789"
+                  comments:
+                    - user_id: "user456"
+                      comment: "良いですね！"
                 - post_id: "2"
                   user_id: "user456"
                   content: "チーム〇〇でラーメンを食べてきました！"
                   image_url: "https://example.com/ramen.jpg"
                   location: "BBB店"
+                  likes:
+                    - "user123"
+                  comments: []
+                - post_id: "3"
+                  user_id: "user789"
+                  content: "〇〇さんとランチしました。デザートがとても美味しかった！"
+                  image_url: "https://example.com/dessert.jpg"
+                  location: "CCC店"
+                  likes:
+                    - "user123"
+                    - "user456"
+                    - "user789"
+                  comments: []
+
     post:
       summary: 新しいランチ投稿を作成
       requestBody:
@@ -45,12 +65,16 @@ paths:
           description: 投稿成功。作成したランチ投稿の情報を返す.
           content:
             application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
               example:
-                post_id: "3"
+                post_id: "4"
                 user_id: "user789"
                 content: "〇〇さんとランチしました。デザートがとても美味しかった！"
                 image_url: "https://example.com/dessert.jpg"
                 location: "CCC店"
+                likes: []
+                comments: []
 
   /posts/{post_id}/likes:
     post:
@@ -65,15 +89,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Post'
               example:
-                post_id: "3"
+                post_id: "4"
                 user_id: "user789"
                 content: "〇〇さんとランチしました。デザートがとても美味しかった！"
                 image_url: "https://example.com/dessert.jpg"
                 location: "CCC店"
                 likes:
-                  - "user123"
-                  - "user456"
                   - "user789"
+                comments: []
+
 components:
   parameters:
     post_id:
@@ -107,5 +131,15 @@ components:
           description: いいねを押したユーザーのIDの配列
           items:
             type: string
-
-
+        comments:
+          type: array
+          description: コメント情報の配列
+          items:
+            type: object
+            properties:
+              user_id:
+                type: string
+                description: コメントを残したユーザーのID
+              comment:
+                type: string
+                description: コメントの内容
