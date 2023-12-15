@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "damildrizzy.fastapi-snippets",
+        "ms-python.flake8",
+        "ms-python.python",
+        "github.copilot",
+        "ms-python.black-formatter",
+        "42crunch.vscode-openapi"
+    ]
+}

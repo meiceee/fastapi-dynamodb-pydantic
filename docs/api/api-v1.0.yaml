@@ -16,35 +16,34 @@ paths:
                 items:
                   $ref: '#/components/schemas/Post'
               example:
-                - post_id: "1"
-                  user_id: "user123"
+                - postId: "2f1fa759-72c2-a68e-364f-54fb3f1e4ed1"
+                  userId: "user123"
                   content: "今日ここ行ってきました！とても良かった！"
-                  image_url: "https://example.com/lunch.jpg"
-                  location: "AAA店"
+                  imageKey: "lunch.jpg"
+                  restaurant: "AAA店"
                   likes:
                     - "user456"
                     - "user789"
                   comments:
-                    - user_id: "user456"
+                    - userId: "user456"
                       comment: "良いですね！"
-                - post_id: "2"
-                  user_id: "user456"
+                - postId: "429d4ee2-44f1-d25b-9912-41c604eabef0"
+                  userId: "user456"
                   content: "チーム〇〇でラーメンを食べてきました！"
-                  image_url: "https://example.com/ramen.jpg"
-                  location: "BBB店"
+                  imageKey: "ramen.jpg"
+                  restaurant: "BBB店"
                   likes:
                     - "user123"
                   comments: []
-                - post_id: "3"
-                  user_id: "user789"
+                - postId: "f3c512e1-faad-b4cc-1bee-955db716bdca"
+                  userId: "user789"
                   content: "〇〇さんとランチしました。デザートがとても美味しかった！"
-                  image_url: "https://example.com/dessert.jpg"
-                  location: "CCC店"
+                  imageKey: "dessert.jpg"
+                  restaurant: "CCC店"
                   likes:
                     - "user123"
                     - "user456"
                     - "user789"
-                  comments: []
 
     post:
       summary: 新しいランチ投稿を作成
@@ -56,10 +55,9 @@ paths:
             schema:
               $ref: '#/components/schemas/Post'
             example:
-              user_id: "user789"
-              content: "〇〇さんとランチしました。デザートがとても美味しかった！"
-              image_url: "https://example.com/dessert.jpg"
-              location: "CCC店"
+              content: "今日ここ行ってきました！とても良かった！"
+              imageKey: "lunch.jpg"
+              restaurant: "AAA店"
       responses:
         '201':
           description: 投稿成功。作成したランチ投稿の情報を返す.
@@ -68,19 +66,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Post'
               example:
-                post_id: "4"
-                user_id: "user789"
-                content: "〇〇さんとランチしました。デザートがとても美味しかった！"
-                image_url: "https://example.com/dessert.jpg"
-                location: "CCC店"
-                likes: []
-                comments: []
-
-  /posts/{post_id}/likes:
+                - postId: "2f1fa759-72c2-a68e-364f-54fb3f1e4ed1"
+                  userId: "user123"
+                  content: "今日ここ行ってきました！とても良かった！"
+                  imageKey: "lunch.jpg"
+                  restaurant: "AAA店"
+                  likes: []
+  /posts/{postId}/likes:
     post:
       summary: 特定のランチ投稿にいいねを押す
       parameters:
-        - $ref: '#/components/parameters/post_id'
+        - $ref: '#/components/parameters/postId'
       responses:
         '200':
           description: いいね成功。いいねを押したランチ投稿の情報を返す.
@@ -89,19 +85,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/Post'
               example:
-                post_id: "4"
-                user_id: "user789"
+                postId: "4"
+                userId: "user789"
                 content: "〇〇さんとランチしました。デザートがとても美味しかった！"
-                image_url: "https://example.com/dessert.jpg"
-                location: "CCC店"
+                imageKey: "dessert.jpg"
+                restaurant: "CCC店"
                 likes:
                   - "user789"
-                comments: []
 
 components:
   parameters:
-    post_id:
-      name: post_id
+    postId:
+      name: postId
       in: path
       description: ランチ投稿ID
       required: true
@@ -111,35 +106,20 @@ components:
     Post:
       type: object
       properties:
-        post_id:
+        postId:
           type: string
           description: ランチ投稿ID
-        user_id:
-          type: string
-          description: ランチ投稿者のユーザーID
         content:
           type: string
           description: ランチ投稿の内容
-        image_url:
+        imageKey:
           type: string
-          description: ランチ投稿の画像URL
-        location:
+          description: ランチ投稿の画像のキー
+        restaurant:
           type: string
-          description: ランチ投稿の場所
+          description: ランチ投稿のレストラン名
         likes:
           type: array
           description: いいねを押したユーザーのIDの配列
           items:
             type: string
-        comments:
-          type: array
-          description: コメント情報の配列
-          items:
-            type: object
-            properties:
-              user_id:
-                type: string
-                description: コメントを残したユーザーのID
-              comment:
-                type: string
-                description: コメントの内容

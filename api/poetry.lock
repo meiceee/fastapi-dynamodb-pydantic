@@ -32,6 +32,29 @@ test = ["anyio[trio]", "coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "mock (>=
 trio = ["trio (<0.22)"]
 
 [[package]]
+name = "aws-lambda-powertools"
+version = "2.30.0"
+description = "Powertools for AWS Lambda (Python) is a developer toolkit to implement Serverless best practices and increase developer velocity."
+optional = false
+python-versions = ">=3.7.4,<4.0.0"
+files = [
+    {file = "aws_lambda_powertools-2.30.0-py3-none-any.whl", hash = "sha256:dae5f0179381ee7b788f57eab2f7ee51dc5737ba7b9b9688429fb72308cb4013"},
+    {file = "aws_lambda_powertools-2.30.0.tar.gz", hash = "sha256:f17d1e576b21ad3f28172ff72a5135cba06675851b35d80785639dbfbd67c927"},
+]
+
+[package.dependencies]
+typing-extensions = ">=4.6.2,<5.0.0"
+
+[package.extras]
+all = ["aws-xray-sdk (>=2.8.0,<3.0.0)", "fastjsonschema (>=2.14.5,<3.0.0)", "pydantic (>=1.8.2,<2.0.0)"]
+aws-sdk = ["boto3 (>=1.20.32,<2.0.0)"]
+datadog = ["datadog-lambda (>=4.77,<6.0)"]
+datamasking-aws-sdk = ["aws-encryption-sdk (>=3.1.1,<4.0.0)"]
+parser = ["pydantic (>=1.8.2,<2.0.0)"]
+tracer = ["aws-xray-sdk (>=2.8.0,<3.0.0)"]
+validation = ["fastjsonschema (>=2.14.5,<3.0.0)"]
+
+[[package]]
 name = "black"
 version = "23.12.0"
 description = "The uncompromising code formatter."
@@ -647,4 +670,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "cdc162b9d41231dfd0fc190a30937d0fc76b50efa8380db77f636ab71d75ee8d"
+content-hash = "426b484f9735e9ce72d65295bea731bc587ed2757b7239f813b2575b857d6f7a"
