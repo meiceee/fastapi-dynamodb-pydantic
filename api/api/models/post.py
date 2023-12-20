@@ -29,7 +29,6 @@ class PostCreateToDB(BaseModel):
     @classmethod
     def generate_values(cls, values: dict[str, Any]) -> dict[str, Any]:
         """id, skを生成するメソッド"""
-        print("generate_values", values)
         id = generate_uuid()
         values["id"] = id
         values["sk"] = f"Post#{id}"
